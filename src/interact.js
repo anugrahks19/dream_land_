@@ -12,6 +12,7 @@ import {
   NPCS_CONFIG,
   MUSHROOM_PADS,
   HIDDEN_ECHOES,
+  EXPLORER_ANTS,
   DIALOGUE,
   zoneAt,
 } from './data.js';
@@ -45,6 +46,7 @@ const fragmentObjs = [];
 const npcObjs = [];
 const mushroomPadObjs = [];
 const hiddenEchoObjs = [];
+const explorerAntObjs = [];
 let wispMothSprites = [];
 let wayfinderOrbs = [];
 let wayfinderBeacon = null;
@@ -240,6 +242,73 @@ function buildNpcs(scene, state) {
       },
     });
   }
+}
+
+function buildExplorerAnts(scene, state) {
+  explorerAntObjs.length = 0;
+  const eyeMat = new THREE.MeshStandardMaterial({ color: '#1E1A16', roughness: 0.2 });
+  const limbMat = new THREE.MeshStandardMaterial({ color: '#4A3B2A', roughness: 0.78 });
+
+  // Strictly at most 5 autonomous explorer ants roaming the expanded open world
+  const list = EXPLORER_ANTS.slice(0, 5);
+  list.forEach((ac, idx) => {
+    const grp = new THREE.Group();
+    const shellMat = new THREE.MeshStandardMaterial({ color: ac.shell, roughness: 0.48 });
+    const scarfMat = new THREE.MeshStandardMaterial({ color: ac.scarf, emissive: ac.scarf, emissiveIntensity: 0.35, roughness: 0.6 });
+
+    const abdomen = new THREE.Mesh(new THREE.SphereGeometry(0.48, 12, 10), shellMat);
+    abdomen.position.set(0, 0.62, -0.48); abdomen.scale.set(0.95, 0.88, 1.15); abdomen.castShadow = true;
+    const thorax = new THREE.Mesh(new THREE.SphereGeometry(0.36, 12, 10), shellMat);
+    thorax.position.set(0, 0.68, 0.04); thorax.castShadow = true;
+    const head = new THREE.Mesh(new THREE.SphereGeometry(0.4, 12, 10), shellMat);
+    head.position.set(0, 0.86, 0.48); head.castShadow = true;
+
+    // Explorer scarf collar + glowing backpack dewdrop so they stand out beautifully!
+    const scarf = new THREE.Mesh(new THREE.TorusGeometry(0.32, 0.08, 6, 12), scarfMat);
+    scarf.rotation.x = Math.PI * 0.5; scarf.position.set(0, 0.78, 0.22);
+    const packHalo = new THREE.Sprite(getSprite('fx.sparkle', ac.scarf, true));
+    packHalo.position.set(0, 1.35, -0.2); packHalo.scale.set(1.6, 1.6, 1);
+
+    for (const sx of [-0.2, 0.2]) {
+      const eye = new THREE.Mesh(new THREE.SphereGeometry(0.12, 8, 6), eyeMat);
+      eye.position.set(sx, 0.94, 0.78);
+      grp.add(eye);
+    }
+
+    const legs = [];
+    for (let i = 0; i < 3; i++) {
+      for (const side of [-1, 1]) {
+        const lPivot = new THREE.Group();
+        lPivot.position.set(side * 0.28, 0.48, [-0.26, 0.02, 0.28][i]);
+        const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.03, 0.48, 5), limbMat);
+        leg.position.set(side * 0.1, -0.22, 0); leg.rotation.z = side * 0.38;
+        lPivot.add(leg);
+        grp.add(lPivot);
+        legs.push({ pivot: lPivot, phase: i * 1.1 + (side > 0 ? 0 : Math.PI) });
+      }
+    }
+
+    grp.add(abdomen, thorax, head, scarf, packHalo);
+    const y0 = getBaseHeightAt(ac.homeX, ac.homeZ);
+    grp.position.set(ac.homeX, y0, ac.homeZ);
+    scene.add(grp);
+
+    const antObj = { cfg: ac, group: grp, legs, phase: idx * 1.35, walkCycle: 0 };
+    explorerAntObjs.push(antObj);
+
+    interactables.push({
+      id: `explorer_${ac.id}`,
+      getPos: () => grp.position,
+      radius: 4.8,
+      yRadius: 4.0,
+      prompt: `Chat with ${ac.name}`,
+      isEnabled: () => true,
+      onInteract: () => {
+        triggerTalkWave(state);
+        uiHooks?.openDialogue?.(ac.name, 0, [ac.line]);
+      },
+    });
+  });
 }
 
 function buildCavernPuzzle(scene, state) {
@@ -570,6 +639,7 @@ export function initInteractions(scene, state, hooks) {
 
   buildFragments(scene, state);
   buildNpcs(scene, state);
+  buildExplorerAnts(scene, state);
   buildCavernPuzzle(scene, state);
   buildHiddenEchoes(scene, state);
   buildHumRingAndSurge(scene);
@@ -879,10 +949,34 @@ export function updateInteractions(dt, state, scene) {
     }
   }
 
-  // 6. Animate NPCs (gentle breathing ride & sparkle bob)
+  // 6. Animate NPCs (gentle breathing ride & sparkle bob) + 5 Autonomous Explorer Ants!
   for (const n of npcObjs) {
     n.group.position.y = getHeightAt(n.cfg.x, n.cfg.z, state.breath.value);
     n.bobSprite.position.y = 3.2 + Math.sin(t * 2.8) * 0.25;
+  }
+  for (const ant of explorerAntObjs) {
+    const ac = ant.cfg;
+    const distPip = Math.hypot(p.x - ant.group.position.x, p.z - ant.group.position.z);
+    if (distPip < 5.5) {
+      // Pause & face Pip curiously when nearby!
+      const faceYaw = Math.atan2(p.x - ant.group.position.x, p.z - ant.group.position.z);
+      ant.group.rotation.y += (faceYaw - ant.group.rotation.y) * Math.min(1, dt * 6);
+      ant.group.position.y = getHeightAt(ant.group.position.x, ant.group.position.z, state.breath.value);
+      for (const l of ant.legs) l.pivot.rotation.x *= Math.exp(-dt * 8);
+    } else {
+      ant.phase += dt * ac.speed;
+      const nx = ac.homeX + Math.sin(ant.phase) * ac.radX;
+      const nz = ac.homeZ + Math.sin(ant.phase * 2.0) * ac.radZ * 0.55;
+      const dx = nx - ant.group.position.x;
+      const dz = nz - ant.group.position.z;
+      const ny = getHeightAt(nx, nz, state.breath.value);
+      ant.group.position.set(nx, ny, nz);
+      if (Math.hypot(dx, dz) > 0.001) {
+        ant.group.rotation.y = Math.atan2(dx, dz);
+      }
+      ant.walkCycle += dt * 11;
+      for (const l of ant.legs) l.pivot.rotation.x = Math.sin(ant.walkCycle + l.phase) * 0.52;
+    }
   }
 
   // 7. Caverns Wisp-Moth Trail & 3-Pad Mushroom Puzzle

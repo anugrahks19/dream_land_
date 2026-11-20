@@ -231,7 +231,7 @@ function renderWorldMap() {
     g, w, h
   );
 
-  const toMap = (wx, wz) => [((wx + 300) / 600) * w, ((wz + 100) / 200) * h];
+  const toMap = (wx, wz) => [((wx + 390) / 780) * w, ((wz + 170) / 340) * h];
 
   // Calm Spots
   for (const cs of CALM_SPOTS) {

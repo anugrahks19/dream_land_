@@ -79,7 +79,7 @@ export function getBaseHeightAt(x, z) {
   const tX = Math.max(0, Math.min(1, (x - CONFIG.world.tailX) / CONFIG.world.width));
   let h = tX * 26.0 + Math.sin(tX * Math.PI) * 5.0;
 
-  const flank = Math.min(1, Math.abs(z) / 92);
+  const flank = Math.min(1, Math.abs(z) / 162);
   h -= flank * flank * 11.5;
 
   const n = (fbm2(x, z) - 0.5) * 11.0;
@@ -106,7 +106,7 @@ export function getBaseHeightAt(x, z) {
 export function getBreathMask(x, z) {
   const zInfo = zoneAt(x);
   const zoneAmp = zInfo.zone.amplitudeScale + (zInfo.nextZone.amplitudeScale - zInfo.zone.amplitudeScale) * zInfo.blend;
-  const spineBoost = 1.0 - Math.min(0.65, (Math.abs(z) / 95) * 0.65);
+  const spineBoost = 1.0 - Math.min(0.65, (Math.abs(z) / 165) * 0.65);
   const startDamp = smoothstep(8, 35, Math.hypot(x - CONFIG.player.spawnPos.x, z));
   return zoneAmp * spineBoost * (0.35 + 0.65 * startDamp);
 }
@@ -640,12 +640,16 @@ function buildMarshes(scene) {
   windowMatDark = getMat('build.window.dark', new THREE.MeshStandardMaterial({ color: '#2C4A47' }));
   const plankSignMat = getMat('build.plank.painted', new THREE.MeshStandardMaterial({ color: '#DFCEB2' }));
 
-  // 4 Tiny-Glade Cozy Stone & Timber Cottages in Tail Marshes Colony
+  // 7 Tiny-Glade Cozy Stone & Timber Cottages across Tail Marshes & Expanded Outer Valleys
   const huts = [
     { x: -272, z: -15, r: 4.3, rot: 0.45 },
     { x: -255, z: -20, r: 3.6, rot: -0.28 },
     { x: -274, z: 13, r: 4.0, rot: 1.35 },
     { x: -250, z: 18, r: 3.5, rot: -1.15 },
+    // Expanded outer open-world hamlets (also serve as Tremor/Sneeze shelters!)
+    { x: -206, z: 86, r: 4.1, rot: 0.85 },
+    { x: -182, z: 102, r: 3.6, rot: -0.6 },
+    { x: -318, z: -38, r: 4.2, rot: 0.3 },
   ];
   for (const h of huts) {
     buildTinyGladeCottage(scene, h.x, h.z, h.r, h.rot, mats);
@@ -697,8 +701,11 @@ function buildMarshes(scene) {
     fernAnchors.push({ x: bx, z: bz, r: 1.0, count: 2 });
   }
 
-  // Real CC0 Boulders scattered naturally with solid collision AND standable tops!
-  for (const [rx, rz, sc] of [[-236, -20, 2.2], [-212, 6, 1.9], [-182, -14, 2.4], [-144, 18, 2.6], [-118, -18, 2.3], [32, 16, 2.8]]) {
+  // Real CC0 Boulders scattered naturally across main & expanded outer valleys (solid cover for Sneeze Gales!)
+  for (const [rx, rz, sc] of [
+    [-236, -20, 2.2], [-212, 6, 1.9], [-182, -14, 2.4], [-144, 18, 2.6], [-118, -18, 2.3], [32, 16, 2.8],
+    [-312, 54, 2.8], [-228, 108, 2.5], [-146, -88, 2.7], [-68, -98, 2.9], [-42, 96, 2.6], [108, 86, 3.0], [254, -76, 2.8],
+  ]) {
     const ry = getBaseHeightAt(rx, rz);
     const bModel = cloneModel('boulder');
     if (bModel) {
@@ -859,13 +866,13 @@ function buildForest(scene) {
   const forestPinePal = ['#68824B', '#546E3E', '#839856', '#7A8644'];
   const forestOakPal = ['#D6A246', '#E4BE64', '#A69A42', '#C58538'];
 
-  // 58 Dense Photorealistic EZTree-Style Pines & Golden Autumn Oaks with SOLID TRUNK COLLIDERS!
-  for (let i = 0; i < 58; i++) {
-    const x = -128 + hash2(i, 71) * 156;
-    const z = -60 + hash2(i, 89) * 120;
+  // 92 Dense Photorealistic EZTree-Style Pines & Golden Autumn Oaks across Spine Forest & Expanded Valleys!
+  for (let i = 0; i < 92; i++) {
+    const x = -132 + hash2(i, 71) * 168;
+    const z = -134 + hash2(i, 89) * 268;
     // Keep central flagstone road & vine runway cleanly navigable
     if (Math.abs(z) < 11.5 && x > -110 && x < 12) continue;
-    const h = 13.5 + hash2(i, 101) * 11.5;
+    const h = 13.5 + hash2(i, 101) * 12.5;
     const r = 0.65 + hash2(i, 113) * 0.48;
     const isPine = i % 3 !== 0;
     forestTreeBuilder.addTree(x, z, h, r, isPine ? 'pine' : 'oak', isPine ? forestPinePal : forestOakPal);
@@ -1016,11 +1023,14 @@ function buildCaverns(scene) {
   capInst.instanceMatrix.needsUpdate = true;
   scene.add(stemInst, capInst);
 
-  // Solid Glowing Crystal Formations
+  // Solid Glowing Crystal Formations (central cavern + expanded outer crystal grottos!)
   const cryGeo = new THREE.OctahedronGeometry(1.9, 0);
-  for (let i = 0; i < 18; i++) {
-    const cx = 48 + i * 6.8;
-    const cz = (i % 2 === 0 ? -1 : 1) * (20 + (i % 3) * 5);
+  for (let i = 0; i < 30; i++) {
+    const outer = i >= 18;
+    const cx = outer ? 46 + (i - 18) * 10.5 : 48 + i * 6.8;
+    const cz = outer
+      ? (i % 2 === 0 ? -1 : 1) * (54 + (i % 4) * 16)
+      : (i % 2 === 0 ? -1 : 1) * (20 + (i % 3) * 5);
     const c = new THREE.Mesh(cryGeo, i % 2 === 0 ? crystalTealMat : crystalPinkMat);
     c.position.set(cx, getBaseHeightAt(cx, cz) + 1.5, cz);
     c.scale.set(0.85, 2.3, 0.85);
@@ -1181,16 +1191,16 @@ function buildSharedFoliageAndPlatforms(scene) {
   const fernSway = buildRealisticFerns(scene, botanicalTextures.fernFrondTex, getBaseHeightAt, fernAnchors);
   swayMeshGroups.push(fernSway);
 
-  // 320 Painted Wildflower Blooms across Marshes & Crown meadows!
+  // 560 Painted Wildflower Blooms across expanded Marshes, Valleys & Crown meadows!
   const flMat = getMat('nature.flowers.bloom', new THREE.MeshStandardMaterial({ color: '#FFF4DC', transparent: true, alphaTest: 0.16, side: THREE.DoubleSide, roughness: 0.8 }));
   const flGeo = new THREE.PlaneGeometry(0.95, 0.95); flGeo.translate(0, 0.55, 0);
-  const flCount = 320;
+  const flCount = 560;
   const flInst = new THREE.InstancedMesh(flGeo, flMat, flCount);
   const flCols = [new THREE.Color('#FFF4DC'), new THREE.Color('#FFC77A'), new THREE.Color('#F6B8C8'), new THREE.Color('#E8C06A')];
   for (let i = 0; i < flCount; i++) {
-    const inCrown = i > 230;
-    const x = inCrown ? 190 + hash2(i, 601) * 95 : -280 + hash2(i, 607) * 165;
-    const z = -54 + hash2(i, 613) * 108;
+    const inCrown = i > 390;
+    const x = inCrown ? 185 + hash2(i, 601) * 175 : -365 + hash2(i, 607) * 245;
+    const z = -132 + hash2(i, 613) * 264;
     const sc = 0.7 + hash2(i, 619) * 0.65;
     tmpPos.set(x, getBaseHeightAt(x, z) - 0.05, z);
     tmpEuler.set(0, hash2(i, 631) * Math.PI, 0);
@@ -1204,12 +1214,12 @@ function buildSharedFoliageAndPlatforms(scene) {
   if (flInst.instanceColor) flInst.instanceColor.needsUpdate = true;
   scene.add(flInst);
 
-  // Drifting golden fireflies & warm sun-dust motes
-  const ffCount = 110;
+  // Drifting golden fireflies & warm sun-dust motes across expanded world
+  const ffCount = 175;
   const ffPos = new Float32Array(ffCount * 3);
   for (let i = 0; i < ffCount; i++) {
-    const x = -280 + hash2(i, 401) * 560;
-    const z = -55 + hash2(i, 409) * 110;
+    const x = -365 + hash2(i, 401) * 730;
+    const z = -138 + hash2(i, 409) * 276;
     ffPos[i * 3] = x;
     ffPos[i * 3 + 1] = getBaseHeightAt(x, z) + 2.2 + hash2(i, 419) * 5.5;
     ffPos[i * 3 + 2] = z;

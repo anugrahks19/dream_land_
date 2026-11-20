@@ -486,7 +486,7 @@ function createCurvedGrassBladeGeometry() {
 }
 
 export function buildRealisticGrassField(scene, getBaseHeightAt, breathMaskAt, exclusions = []) {
-  const BLADE_COUNT = 22000; // x3 blades per clump = 66,000 real curved blades!
+  const BLADE_COUNT = 30000; // x3 blades per clump = 90,000 real curved blades across the expanded open world!
   const baseGeo = createCurvedGrassBladeGeometry();
   const geo = new THREE.InstancedBufferGeometry();
   geo.index = baseGeo.index;
@@ -519,15 +519,17 @@ export function buildRealisticGrassField(scene, getBaseHeightAt, breathMaskAt, e
   let attempts = 0;
   while (placed < BLADE_COUNT && attempts < BLADE_COUNT * 4) {
     attempts++;
-    // 55% concentrated densely around Tail Marshes Colony & meadow foreground (high visual richness!),
-    // 45% across Spine Forest floor & glades
+    // 45% dense around Tail Marshes Colony & foreground, 30% across Spine Forest, 25% across expanded N/S valleys
     let x, z;
-    if (placed < BLADE_COUNT * 0.56) {
-      x = -286 + hash2(attempts, 13.7) * 160;
-      z = -48 + hash2(attempts, 29.3) * 96;
+    if (placed < BLADE_COUNT * 0.45) {
+      x = -335 + hash2(attempts, 13.7) * 210;
+      z = -68 + hash2(attempts, 29.3) * 136;
+    } else if (placed < BLADE_COUNT * 0.75) {
+      x = -126 + hash2(attempts, 47.1) * 168;
+      z = -78 + hash2(attempts, 61.9) * 156;
     } else {
-      x = -126 + hash2(attempts, 47.1) * 162;
-      z = -54 + hash2(attempts, 61.9) * 108;
+      x = -355 + hash2(attempts, 73.1) * 395;
+      z = (hash2(attempts, 83.7) > 0.5 ? 1 : -1) * (58 + hash2(attempts, 89.3) * 86);
     }
     if (isExcluded(x, z)) continue;
 

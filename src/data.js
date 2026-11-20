@@ -6,28 +6,28 @@
 
 export const CONFIG = {
   world: {
-    width: 600,
-    depth: 200,
-    segX: 200,
-    segZ: 80,
+    width: 780,
+    depth: 340,
+    segX: 240,
+    segZ: 110,
     unit: 1,
-    minX: -288,
-    maxX: 288,
-    minZ: -86,
-    maxZ: 86,
-    // World X runs -300..+300 (tail at -300, head at +300)
-    tailX: -300,
-    headX: 300,
-    baseFogDensity: 0.0095,
+    minX: -378,
+    maxX: 378,
+    minZ: -156,
+    maxZ: 156,
+    // World X runs -390..+390 (tail at -390, head at +390), Z runs -170..+170
+    tailX: -390,
+    headX: 390,
+    baseFogDensity: 0.0082,
     maxSlopeDeg: 52,
   },
 
-  // Four continuous zones from Tail (-300) to Crown (+300)
+  // Four continuous zones from Tail (-390) to Crown (+390)
   zones: [
     {
       id: 'marshes',
       name: 'Tail Marshes',
-      xStart: -300,
+      xStart: -390,
       xEnd: -135,
       mainColor: '#8FBF8F',
       accentColor: '#F4E9CD',
@@ -80,7 +80,7 @@ export const CONFIG = {
       id: 'crown',
       name: 'The Crown',
       xStart: 175,
-      xEnd: 300,
+      xEnd: 390,
       mainColor: '#F5F0EA',
       accentColor: '#F6B8C8',
       accentGold: '#F2C879',
@@ -226,6 +226,20 @@ export const CALM_SPOTS = [
   // Crown
   { id: 'calm_crown_base', zone: 'crown', x: 185, z: 0, radius: 5.5, label: 'Cloudstep Rest' },
   { id: 'calm_crown_summit', zone: 'crown', x: 222, z: 2, radius: 6.0, label: 'Pebble Overlook' },
+  // Expanded Open-World Outer Sanctuaries (North & South Valleys)
+  { id: 'calm_south_meadow', zone: 'marshes', x: -195, z: 96, radius: 6.0, label: 'South Wildflower Hollow' },
+  { id: 'calm_north_pines', zone: 'forest', x: -64, z: -92, radius: 6.0, label: 'Northern Pine Sanctuary' },
+  { id: 'calm_cavern_grotto', zone: 'caverns', x: 102, z: 78, radius: 6.0, label: 'Crystal Echo Grotto' },
+  { id: 'calm_crown_ridge', zone: 'crown', x: 268, z: -84, radius: 6.0, label: 'Starlight Cloud Ridge' },
+];
+
+// Strictly 5 autonomous Explorer Ants roaming the expanded open world!
+export const EXPLORER_ANTS = [
+  { id: 'ant_mossy', name: 'Scout Clover', homeX: -236, homeZ: -26, radX: 22, radZ: 18, speed: 0.24, shell: '#C8643B', scarf: '#8FBF8F', line: 'The marsh moss feels extra bouncy today! Try exploring the southern wildflower valley!' },
+  { id: 'ant_meadow', name: 'Forager Pippin', homeX: -168, homeZ: 92, radX: 28, radZ: 22, speed: 0.21, shell: '#D47B46', scarf: '#F4E9CD', line: 'I found a whole hidden meadow out south—no rush, just breathe with Old Mother Hush.' },
+  { id: 'ant_amber', name: 'Ranger Acorn', homeX: -58, homeZ: -86, radX: 26, radZ: 20, speed: 0.26, shell: '#B85A34', scarf: '#D9A441', line: 'Watch out for her giant sneezes up here in the northern pines! Hide behind a trunk!' },
+  { id: 'ant_crystal', name: 'Delver Luma', homeX: 98, homeZ: 68, radX: 22, radZ: 18, speed: 0.22, shell: '#9E5442', scarf: '#4FD1C5', line: 'The rib arches hum when she breathes—and shelter you whenever a Giant Tremor hits!' },
+  { id: 'ant_cloud', name: 'Stargazer Nim', homeX: 256, homeZ: -74, radX: 24, radZ: 22, speed: 0.20, shell: '#D97B66', scarf: '#F6B8C8', line: 'From this ridge you can watch the whole Dream Meteor shower streak across the sky!' },
 ];
 
 export const FRAGMENT_LOCATIONS = [

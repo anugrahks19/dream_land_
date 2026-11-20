@@ -572,7 +572,7 @@ export function updatePlayer(dt, state) {
   pipGroup.position.set(p.x, p.visualY, p.z);
   pipGroup.rotation.y = p.yaw;
 
-  if (!respawnLock && (p.y < terrY + CONFIG.player.fallRespawnOffset || Math.abs(p.z) > 84.5)) {
+  if (!respawnLock && (p.y < terrY + CONFIG.player.fallRespawnOffset || Math.abs(p.z) > 154.0)) {
     respawnLock = true;
     state._playerCallbacks?.onFallRespawn?.(() => { respawnLock = false; });
   }
