@@ -1,0 +1,2767 @@
+{
+  "name": "Dreamback Texture Kit",
+  "version": "1.0.0",
+  "seed": 1337,
+  "totalTextures": 148,
+  "pipColors": {
+    "shellBase": "#C8643B",
+    "shellHighlight": "#E08A5A",
+    "belly": "#F4E9CD",
+    "eyeDark": "#2C4A47",
+    "eyeSpark": "#FFF4DC",
+    "leafBase": "#6E9F6A",
+    "leafHighlight": "#B7D6A0",
+    "bulbEmissive": "#FFC77A",
+    "bulbCore": "#FFF4DC"
+  },
+  "timeKeyframes": [
+    {
+      "id": "golden",
+      "label": "Golden Hour",
+      "zenith": "#7C86C0",
+      "mid": "#F2A58E",
+      "horizon": "#FFD9A0",
+      "sunColor": "#FFC77A",
+      "sunElevationDeg": 15,
+      "fogTint": "#F2C49A",
+      "gradeStrength": 0.35
+    },
+    {
+      "id": "rose",
+      "label": "Rose Dusk",
+      "zenith": "#8C7FBF",
+      "mid": "#F29AA0",
+      "horizon": "#FFC9A6",
+      "sunColor": "#FFB88A",
+      "sunElevationDeg": 12,
+      "fogTint": "#E9AEAE",
+      "gradeStrength": 0.42
+    },
+    {
+      "id": "lavender",
+      "label": "Lavender Blue Hour",
+      "zenith": "#6E70B0",
+      "mid": "#C98FB5",
+      "horizon": "#F2B7B0",
+      "sunColor": "#F6B8C8",
+      "sunElevationDeg": 8,
+      "fogTint": "#B998C2",
+      "gradeStrength": 0.5
+    },
+    {
+      "id": "peach",
+      "label": "Peach Glow",
+      "zenith": "#8E86C4",
+      "mid": "#F5B39A",
+      "horizon": "#FFE0B8",
+      "sunColor": "#FFD194",
+      "sunElevationDeg": 14,
+      "fogTint": "#F4C9A8",
+      "gradeStrength": 0.36
+    },
+    {
+      "id": "dawn",
+      "label": "Crown Dawn",
+      "zenith": "#A9A8D6",
+      "mid": "#F6B8C8",
+      "horizon": "#FFE7B0",
+      "sunColor": "#FFE0A6",
+      "sunElevationDeg": 18,
+      "fogTint": "#F5D6CE",
+      "gradeStrength": 0.3
+    }
+  ],
+  "uiTokens": {
+    "--db-paper": "#FBF1DC",
+    "--db-paper-dark": "#E9D9B8",
+    "--db-cream": "#F4E9CD",
+    "--db-ink": "#4A3B2A",
+    "--db-shadow-tint": "#2C4A47",
+    "--db-accent-hub": "#FFC77A",
+    "--db-accent-marsh": "#8FBF8F",
+    "--db-accent-forest": "#D9A441",
+    "--db-accent-cavern": "#4FD1C5",
+    "--db-accent-crown": "#F6B8C8",
+    "--db-radius-sm": "10px",
+    "--db-radius-md": "16px",
+    "--db-radius-lg": "24px",
+    "--db-shadow-soft": "0 8px 24px rgba(74, 59, 42, 0.16)",
+    "--db-shadow-inset": "inset 0 2px 6px rgba(255, 244, 220, 0.7)",
+    "--db-font-ui": "'Fredoka', 'Nunito', system-ui, sans-serif",
+    "--db-font-title": "'Caveat Brush', Georgia, serif"
+  },
+  "storyTokens": {
+    "textColor": "#4A3B2A",
+    "textLight": "#FFF4DC",
+    "textShadow": "0 2px 10px rgba(74, 59, 42, 0.28)",
+    "caretColor": "#C8643B",
+    "maxLineLengthCh": 54,
+    "lineHeight": 1.62
+  },
+  "textures": [
+    {
+      "id": "land.marsh",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Marshes sage moss-grass terrain",
+      "worldRepeat": 8,
+      "flatShading": false,
+      "mergeTarget": "Terrain shader (Marshes zone)"
+    },
+    {
+      "id": "land.hub",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Hub lush meadow with clover and daisies",
+      "worldRepeat": 8,
+      "flatShading": false,
+      "mergeTarget": "Terrain shader (Hub zone)"
+    },
+    {
+      "id": "land.forest",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Forest warm amber leaf-litter terrain",
+      "worldRepeat": 8,
+      "flatShading": false,
+      "mergeTarget": "Terrain shader (Forest zone)"
+    },
+    {
+      "id": "land.cavern",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Caverns indigo stone with teal moss cracks and pink spores",
+      "worldRepeat": 8,
+      "flatShading": false,
+      "mergeTarget": "Terrain shader (Caverns zone)"
+    },
+    {
+      "id": "land.cavern.rough",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "linear",
+      "kind": "data",
+      "usage": "Caverns roughness map (wet gloss in Worley cracks)",
+      "worldRepeat": 8,
+      "flatShading": false,
+      "mergeTarget": "Game asset"
+    },
+    {
+      "id": "land.crown",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Crown pearl marble-cloud terrain with blush veins and gold dust",
+      "worldRepeat": 8,
+      "flatShading": false,
+      "mergeTarget": "Terrain shader (Crown zone)"
+    },
+    {
+      "id": "land.scales",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Giant skin soft scale overlay (tiles every 40 world units)",
+      "worldRepeat": 40,
+      "flatShading": false,
+      "mergeTarget": "Terrain Giant skin overlay (~0.15 strength)"
+    },
+    {
+      "id": "land.scales.normal",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "linear",
+      "kind": "data",
+      "usage": "Giant skin soft scale normal map",
+      "worldRepeat": 40,
+      "flatShading": false,
+      "mergeTarget": "Game asset"
+    },
+    {
+      "id": "land.macro",
+      "baseSize": [
+        1024,
+        512
+      ],
+      "size": [
+        1024,
+        512
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "World-wide watercolor variation map across 600x200 world",
+      "worldRepeat": 600,
+      "flatShading": false,
+      "mergeTarget": "Terrain world-wide multiply UV (600x200)"
+    },
+    {
+      "id": "land.cliff",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Flat-facet rock cliff with strata and top-edge moss",
+      "worldRepeat": 8,
+      "flatShading": true,
+      "mergeTarget": "Steep terrain slopes & rock faces"
+    },
+    {
+      "id": "path.dirt",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Warm tan dirt path with pebbles and faint ruts",
+      "worldRepeat": 6,
+      "flatShading": false,
+      "mergeTarget": "Dirt ground clearings"
+    },
+    {
+      "id": "path.dirt.strip",
+      "baseSize": [
+        256,
+        512
+      ],
+      "size": [
+        256,
+        512
+      ],
+      "tiles": "y",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Dirt path ribbon strip with soft alpha sides & grass nicks",
+      "worldRepeat": 6,
+      "flatShading": false,
+      "mergeTarget": "Path spline ribbons"
+    },
+    {
+      "id": "path.cobble",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Small rounded pebble cobblestone near towers",
+      "worldRepeat": 4,
+      "flatShading": true,
+      "mergeTarget": "Tower courtyard cobblestones"
+    },
+    {
+      "id": "path.steps",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Stepping-stone top with mossy rim",
+      "worldRepeat": 4,
+      "flatShading": true,
+      "mergeTarget": "Stepping stone pads"
+    },
+    {
+      "id": "shore.mud",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Wet brown-green mud gradient for pool edges",
+      "worldRepeat": 6,
+      "flatShading": false,
+      "mergeTarget": "Pool shore mud banks"
+    },
+    {
+      "id": "water.pool",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Teal pool water with tileable soft caustic web (scrolling)",
+      "worldRepeat": 6,
+      "flatShading": false,
+      "mergeTarget": "Pool water surfaces (slow UV scroll)"
+    },
+    {
+      "id": "water.foam",
+      "baseSize": [
+        256,
+        64
+      ],
+      "size": [
+        256,
+        64
+      ],
+      "tiles": "x",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Cream scalloped shore foam strip with soft alpha",
+      "worldRepeat": 4,
+      "flatShading": false,
+      "mergeTarget": "Pool shoreline foam strips"
+    },
+    {
+      "id": "ground.moss",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Dense teal-green moss tile with tiny spore glints for cavern rocks",
+      "worldRepeat": 6,
+      "flatShading": false,
+      "mergeTarget": "Cavern walls & mossy rocks"
+    },
+    {
+      "id": "build.stone",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Tower stone masonry (tiles every 4 world units)",
+      "worldRepeat": 4,
+      "flatShading": true,
+      "mergeTarget": "Towers & stone walls"
+    },
+    {
+      "id": "build.stone.normal",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "linear",
+      "kind": "data",
+      "usage": "Tower stone masonry normal map",
+      "worldRepeat": 4,
+      "flatShading": false,
+      "mergeTarget": "Game asset"
+    },
+    {
+      "id": "build.stone.ruin",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Mossy ruined stone masonry with chipped corners and cracks",
+      "worldRepeat": 4,
+      "flatShading": true,
+      "mergeTarget": "Ruined walls & arches"
+    },
+    {
+      "id": "build.stone.arch",
+      "baseSize": [
+        256,
+        128
+      ],
+      "size": [
+        256,
+        128
+      ],
+      "tiles": "x",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Voussoir wedge stone strip for arches (tiles in X)",
+      "worldRepeat": 4,
+      "flatShading": true,
+      "mergeTarget": "Archway voussoirs"
+    },
+    {
+      "id": "build.roof",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Rounded-bottom cottage roof shingles (tiles every 3 units)",
+      "worldRepeat": 3,
+      "flatShading": true,
+      "mergeTarget": "Tower & hut roofs"
+    },
+    {
+      "id": "build.roof.moss",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Moss-covered roof shingle variant",
+      "worldRepeat": 3,
+      "flatShading": true,
+      "mergeTarget": "Old mossy roofs"
+    },
+    {
+      "id": "build.plaster",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Colony hut clay plaster (cream to sage with trowel strokes)",
+      "worldRepeat": 4,
+      "flatShading": false,
+      "mergeTarget": "Colony hut clay walls"
+    },
+    {
+      "id": "build.plank",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Warm vertical wood planks (tiles every 2 world units)",
+      "worldRepeat": 2,
+      "flatShading": false,
+      "mergeTarget": "Bridges, piers & fences"
+    },
+    {
+      "id": "build.plank.painted",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Sign board wood planks with chalky cream edge wear",
+      "worldRepeat": 2,
+      "flatShading": false,
+      "mergeTarget": "Tutorial wooden sign boards"
+    },
+    {
+      "id": "build.log",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": "y",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Log texture: left half bark, right half end-grain rings (tiles in Y)",
+      "worldRepeat": 2,
+      "flatShading": false,
+      "mergeTarget": "Fallen logs & benches"
+    },
+    {
+      "id": "build.rope",
+      "baseSize": [
+        64,
+        128
+      ],
+      "size": [
+        64,
+        128
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Twisted diagonal rope stripe tile",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Bridge ropes & bindings"
+    },
+    {
+      "id": "build.barrel",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Wooden barrel staves with two iron hoops",
+      "worldRepeat": 1.5,
+      "flatShading": false,
+      "mergeTarget": "Colony barrels"
+    },
+    {
+      "id": "build.door",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Round storybook wooden cottage door with iron straps",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Round hut doors"
+    },
+    {
+      "id": "build.trim",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Shutters and cottage trim in sage and cream",
+      "worldRepeat": 2,
+      "flatShading": false,
+      "mergeTarget": "Window shutters & trim"
+    },
+    {
+      "id": "build.window",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Warm glowing cottage window with cross mullions (emissive)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Lit cottage/tower windows"
+    },
+    {
+      "id": "build.window.dark",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Unlit dusk window glass with cross mullions",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Unlit windows below fragment threshold"
+    },
+    {
+      "id": "build.lantern",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Translucent amber lantern glass with bright core and frame",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Hanging & post lanterns"
+    },
+    {
+      "id": "build.gate",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Caverns indigo carved stone gate",
+      "worldRepeat": 4,
+      "flatShading": true,
+      "mergeTarget": "Caverns carved stone gate"
+    },
+    {
+      "id": "build.gate.emissive",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Glowing teal rune line emissive map for Caverns gate",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Game asset"
+    },
+    {
+      "id": "build.altar",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Crown pearl stone circle altar top with rune ring",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Crown stone altar top"
+    },
+    {
+      "id": "build.altar.socket",
+      "baseSize": [
+        512,
+        128
+      ],
+      "size": [
+        512,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Altar socket decals (4x128 atlas in zone colors)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Altar fragment sockets (lit state)"
+    },
+    {
+      "id": "build.altar.socket.lit",
+      "baseSize": [
+        512,
+        128
+      ],
+      "size": [
+        512,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Altar socket lit emissive atlas (4x128)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Game asset"
+    },
+    {
+      "id": "build.altar.socket.unlit",
+      "baseSize": [
+        512,
+        128
+      ],
+      "size": [
+        512,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Altar socket unlit carved stone atlas (4x128)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Altar fragment sockets (unlit state)"
+    },
+    {
+      "id": "build.rib",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Giant-rib arch smooth pearl-indigo bone with faint growth rings",
+      "worldRepeat": 4,
+      "flatShading": false,
+      "mergeTarget": "Giant-rib bone arches"
+    },
+    {
+      "id": "nature.reed",
+      "baseSize": [
+        64,
+        256
+      ],
+      "size": [
+        64,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "Marsh reed blade sprite (alpha)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Marsh reed cards"
+    },
+    {
+      "id": "nature.reed.cattail",
+      "baseSize": [
+        64,
+        256
+      ],
+      "size": [
+        64,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "Marsh cattail seed-head reed variant (alpha)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Marsh cattail reed cards"
+    },
+    {
+      "id": "nature.grassblade",
+      "baseSize": [
+        32,
+        128
+      ],
+      "size": [
+        32,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "Lush tapered grass blade with center vein (alpha)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Instanced grass blades"
+    },
+    {
+      "id": "nature.grassblade.dry",
+      "baseSize": [
+        32,
+        128
+      ],
+      "size": [
+        32,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "Dry golden-tan grass blade variant (alpha)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Dry golden grass blades"
+    },
+    {
+      "id": "nature.flowers",
+      "baseSize": [
+        512,
+        256
+      ],
+      "size": [
+        512,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "8-cell flower atlas (daisy, buttercup, pink, lavender, marigold, teal, pearl lily, blush cosmos)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Instanced biome flowers (8-cell atlas)"
+    },
+    {
+      "id": "nature.flowers.bloom",
+      "baseSize": [
+        384,
+        128
+      ],
+      "size": [
+        384,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "3 tiny single-tint flower heads for the ending wave",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Ending wave bloom cards"
+    },
+    {
+      "id": "nature.clover",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "Tileable clover leaf triplet scatter (alpha)",
+      "worldRepeat": 2,
+      "flatShading": false,
+      "mergeTarget": "Hub clover ground scatter"
+    },
+    {
+      "id": "nature.ivy",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "6-leaf ivy atlas with painted veins (alpha)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Tower & wall ivy clusters"
+    },
+    {
+      "id": "nature.moss",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "Puffy moss cap decal/sprite (alpha)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Puffy moss caps on stones"
+    },
+    {
+      "id": "nature.bark",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Old Honeytree warm brown bark with honey fissures (tiles every 3 units)",
+      "worldRepeat": 3,
+      "flatShading": false,
+      "mergeTarget": "Old Honeytree & woodland trunks"
+    },
+    {
+      "id": "nature.bark.pale",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Pale willow bark in cream with dark flecks",
+      "worldRepeat": 3,
+      "flatShading": false,
+      "mergeTarget": "Willow trunks"
+    },
+    {
+      "id": "nature.canopy",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Golden olive-to-honey leaf cluster canopy tile (tiles every 4 units)",
+      "worldRepeat": 4,
+      "flatShading": false,
+      "mergeTarget": "Instanced tree canopies (per-instance tint)"
+    },
+    {
+      "id": "nature.willow",
+      "baseSize": [
+        64,
+        256
+      ],
+      "size": [
+        64,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "Drooping willow frond strands (alpha)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Hanging willow curtains"
+    },
+    {
+      "id": "nature.mushroom.cap",
+      "baseSize": [
+        384,
+        128
+      ],
+      "size": [
+        384,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "3-cell mushroom cap atlas (teal, pink, indigo with spots)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Cavern mushroom bounce pads (3-cell atlas)"
+    },
+    {
+      "id": "nature.mushroom.cap.glow",
+      "baseSize": [
+        384,
+        128
+      ],
+      "size": [
+        384,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Emissive glow twin for mushroom cap atlas",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Game asset"
+    },
+    {
+      "id": "nature.mushroom.stem",
+      "baseSize": [
+        64,
+        128
+      ],
+      "size": [
+        64,
+        128
+      ],
+      "tiles": "x",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Cream mushroom stem with vertical striations and soft bottom shade",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Cavern mushroom stems"
+    },
+    {
+      "id": "nature.crystal",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "Faceted teal cavern crystal with bright inner core (alpha)",
+      "worldRepeat": 1,
+      "flatShading": true,
+      "mergeTarget": "Teal cavern crystal props"
+    },
+    {
+      "id": "nature.crystal.pink",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "Faceted rose-pink crystal variant (alpha)",
+      "worldRepeat": 1,
+      "flatShading": true,
+      "mergeTarget": "Pink cavern crystal props"
+    },
+    {
+      "id": "nature.crystal.gold",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "Faceted golden crystal variant (alpha)",
+      "worldRepeat": 1,
+      "flatShading": true,
+      "mergeTarget": "Gold crown crystal props"
+    },
+    {
+      "id": "nature.crystal.glow",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "Emissive inner-core glow twin for faceted crystals",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Game asset"
+    },
+    {
+      "id": "nature.cloudpuff",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "Soft storybook cloud puff (pink-lilac underside, gold top)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Floating horizon cloud puffs"
+    },
+    {
+      "id": "nature.pebble",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Small stone pebble surface with warm speckles",
+      "worldRepeat": 1.5,
+      "flatShading": true,
+      "mergeTarget": "Ground pebble meshes"
+    },
+    {
+      "id": "fx.halo.warm",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Warm golden gaussian halo glow (additive-safe)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Additive glow sprite / particle"
+    },
+    {
+      "id": "fx.halo.cool",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Cool cavern-teal gaussian halo glow (additive-safe)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Additive glow sprite / particle"
+    },
+    {
+      "id": "fx.halo.pink",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Soft rose-blush gaussian halo glow (additive-safe)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Additive glow sprite / particle"
+    },
+    {
+      "id": "fx.godray",
+      "baseSize": [
+        64,
+        512
+      ],
+      "size": [
+        64,
+        512
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Soft vertical golden sunbeam god-ray (brightest at top)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Additive glow sprite / particle"
+    },
+    {
+      "id": "fx.firefly",
+      "baseSize": [
+        64,
+        64
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Bright firefly core with soft warm halo",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Additive glow sprite / particle"
+    },
+    {
+      "id": "fx.wishlight",
+      "baseSize": [
+        64,
+        64
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Gold-white wishlight orb with soft trailing tail",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Additive glow sprite / particle"
+    },
+    {
+      "id": "fx.sparkle",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Soft 4-point golden sparkle star",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Additive glow sprite / particle"
+    },
+    {
+      "id": "fx.butterfly",
+      "baseSize": [
+        512,
+        128
+      ],
+      "size": [
+        512,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "4-cell painted butterfly wing atlas (mirrored in shader)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Normal-blended alpha sprite / decal"
+    },
+    {
+      "id": "fx.moth",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Fuzzy glowing moth wing sprite (alpha)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Normal-blended alpha sprite / decal"
+    },
+    {
+      "id": "fx.bird",
+      "baseSize": [
+        256,
+        64
+      ],
+      "size": [
+        256,
+        64
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "3-frame distant bird flap silhouette atlas",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Normal-blended alpha sprite / decal"
+    },
+    {
+      "id": "fx.leaf",
+      "baseSize": [
+        192,
+        64
+      ],
+      "size": [
+        192,
+        64
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "3-shape drifting leaf particle atlas (amber, olive, honey)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Normal-blended alpha sprite / decal"
+    },
+    {
+      "id": "fx.petal",
+      "baseSize": [
+        192,
+        64
+      ],
+      "size": [
+        192,
+        64
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "3-shape drifting blossom petal atlas (cream, pink, gold)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Normal-blended alpha sprite / decal"
+    },
+    {
+      "id": "fx.spore",
+      "baseSize": [
+        64,
+        64
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Soft glowing teal cavern spore particle",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Additive glow sprite / particle"
+    },
+    {
+      "id": "fx.dust",
+      "baseSize": [
+        64,
+        64
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Faint golden sun-dust mote particle",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Additive glow sprite / particle"
+    },
+    {
+      "id": "fx.mist",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Extremely soft low-alpha drifting meadow mist puff",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Normal-blended alpha sprite / decal"
+    },
+    {
+      "id": "fx.smoke",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Soft warm chimney smoke curl puff",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Normal-blended alpha sprite / decal"
+    },
+    {
+      "id": "fx.ring",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Warm golden hum pulse ring with soft inner and outer falloff",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Additive glow sprite / particle"
+    },
+    {
+      "id": "fx.calm",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Calm Spot disc: radial moss glow, thin ring, drifting specks",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Additive glow sprite / particle"
+    },
+    {
+      "id": "fx.orb",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Dream orb with pink-gold warped fBm swirl, bright rim and inner glow",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Additive glow sprite / particle"
+    },
+    {
+      "id": "fx.fragment",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Dream Fragment glowing halo with 6 soft starburst rays",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Additive glow sprite / particle"
+    },
+    {
+      "id": "fx.fragment.crystal",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Neutral-warm faceted Dream Fragment crystal sprite (tintable per zone)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Normal-blended alpha sprite / decal"
+    },
+    {
+      "id": "fx.footprint",
+      "baseSize": [
+        64,
+        64
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Tiny golden flower footprint decal",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Normal-blended alpha sprite / decal"
+    },
+    {
+      "id": "fx.shadow",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Soft round contact shadow tinted #2C4A47 (never black)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Normal-blended alpha sprite / decal"
+    },
+    {
+      "id": "fx.lanternpool",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Warm golden lantern light pool for ground projection",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Additive glow sprite / particle"
+    },
+    {
+      "id": "char.pip.shell",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": "x",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Pip warm russet shell with faint segment lines, cream belly & soft top sheen",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Pip body/carapace sphere"
+    },
+    {
+      "id": "char.pip.eye",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Pip eye sphere texture (dark #2C4A47 iris, two warm sparks, warm rim)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Pip eye spheres"
+    },
+    {
+      "id": "char.pip.leaf",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "Pip backpack leaf sprite with midrib, veins and tiny holes (alpha)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Pip backpack leaf"
+    },
+    {
+      "id": "char.pip.bulb",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Pip lantern bulb warm filament emissive gradient",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Pip lantern bulb (flicker emissive)"
+    },
+    {
+      "id": "char.grandma.body",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": "x",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Grandma cozy sage body with soft moss patches (wraps X)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Grandma body primitive"
+    },
+    {
+      "id": "char.grandma.shawl",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Grandma knitted V-stitch cream shawl with bottom fringe",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Grandma knitted shawl"
+    },
+    {
+      "id": "char.bramble.shell",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": "x",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Bramble olive & amber glossy shell with center split & cream spots",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Bramble beetle shell"
+    },
+    {
+      "id": "char.pebble.shell",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": "x",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Old Pebble spiral cream snail shell with warm swirls & glowing rim",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Old Pebble snail shell"
+    },
+    {
+      "id": "char.pebble.glow",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": "x",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Emissive glowing spiral rim for Old Pebble snail shell",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Game asset"
+    },
+    {
+      "id": "char.pebble.body",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": "x",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Old Pebble pale peach snail body with soft moist sheen",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Old Pebble body"
+    },
+    {
+      "id": "char.moth.body",
+      "baseSize": [
+        64,
+        64
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Wisp-Moth warm emissive fuzzy body gradient",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Wisp-Moth body"
+    },
+    {
+      "id": "char.puff.wool",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Sheep-like Puff curly cream wool tile (tiles every 1.5 units)",
+      "worldRepeat": 1.5,
+      "flatShading": false,
+      "mergeTarget": "Puff wool body spheres"
+    },
+    {
+      "id": "char.puff.face",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Puff friendly taupe muzzle with tiny sparkling eyes and blush cheeks",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Puff face sphere"
+    },
+    {
+      "id": "char.giant.eyelid",
+      "baseSize": [
+        512,
+        256
+      ],
+      "size": [
+        512,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "Sleeping Giant pearl-pink eyelid skin with fine blush veins and gentle creases",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Giant sleeping eyelid mesh"
+    },
+    {
+      "id": "char.giant.lash",
+      "baseSize": [
+        64,
+        256
+      ],
+      "size": [
+        64,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "Sleeping Giant long soft eyelash strand (alpha)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Giant eyelash cards"
+    },
+    {
+      "id": "sky.lut",
+      "baseSize": [
+        5,
+        256
+      ],
+      "size": [
+        5,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "lut",
+      "usage": "5-column sky gradient LUT (golden, rose, lavender, peach, dawn; zenith->horizon)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Sky dome shader gradient LUT"
+    },
+    {
+      "id": "sky.clouds",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "linear",
+      "kind": "data",
+      "usage": "Stretched soft fBm cloud band mask (grayscale, tinted in shader)",
+      "worldRepeat": 120,
+      "flatShading": false,
+      "mergeTarget": "Sky cloud layer mask"
+    },
+    {
+      "id": "sky.cloudshadow",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "linear",
+      "kind": "data",
+      "usage": "Large soft cloud shadow blotches for terrain lighting (0.75..1.0)",
+      "worldRepeat": 90,
+      "flatShading": false,
+      "mergeTarget": "Terrain cloud-shadow projection"
+    },
+    {
+      "id": "sky.sun",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Warm golden sun disc with wide glow and soft horizontal flare",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Sun billboard sprite"
+    },
+    {
+      "id": "sky.stars",
+      "baseSize": [
+        1024,
+        512
+      ],
+      "size": [
+        1024,
+        512
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "Sparse soft twilight stars (equirectangular, fades in at lavender dusk)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Lavender-dusk star dome"
+    },
+    {
+      "id": "sky.horizonhaze",
+      "baseSize": [
+        4,
+        256
+      ],
+      "size": [
+        4,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "lut",
+      "usage": "Warm golden horizon haze alpha strip",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Horizon haze cylinder band"
+    },
+    {
+      "id": "fog.ground",
+      "baseSize": [
+        4,
+        256
+      ],
+      "size": [
+        4,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "lut",
+      "usage": "Ground-hugging golden meadow haze alpha gradient",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Ground-hugging golden haze"
+    },
+    {
+      "id": "post.vignette",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Warm storybook radial vignette (#4A3B2A at 35%, never black)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Post-process warm vignette"
+    },
+    {
+      "id": "post.restless",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "fx",
+      "usage": "Soft warm-gray vignette variant for high restlessness",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Restlessness vignette overlay"
+    },
+    {
+      "id": "post.grain",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": "xy",
+      "space": "linear",
+      "kind": "data",
+      "usage": "Subtle tileable +/- 3% storybook film grain overlay",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Post-process +/-3% grain tile"
+    },
+    {
+      "id": "post.grade",
+      "baseSize": [
+        256,
+        80
+      ],
+      "size": [
+        256,
+        80
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "lut",
+      "usage": "Five 256x16 color-grade 3D LUT strips (rows 0..4 = golden, rose, lavender, peach, dawn)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Color-grade 5-keyframe LUT strips"
+    },
+    {
+      "id": "ui.paper",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "Cream storybook paper tile with fibers and soft tea-stain blotches",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.paper.dark",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "Warmer cream-tan paper tile for pause menu panels",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.panel.border",
+      "baseSize": [
+        192,
+        192
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "9-slice hand-drawn wobbly ink panel border with corner leaf & dot doodles",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.button",
+      "baseSize": [
+        256,
+        96
+      ],
+      "size": [
+        256,
+        96
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "Storybook pill button (normal state)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.button.hover",
+      "baseSize": [
+        256,
+        96
+      ],
+      "size": [
+        256,
+        96
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "Storybook pill button (hover state)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.button.pressed",
+      "baseSize": [
+        256,
+        96
+      ],
+      "size": [
+        256,
+        96
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "Storybook pill button (pressed state)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.button.start",
+      "baseSize": [
+        320,
+        112
+      ],
+      "size": [
+        320,
+        112
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "Primary start pill button with painted leaf sprigs",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.logo.brush",
+      "baseSize": [
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "tiles": "xy",
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "Tileable dry-brush alpha mask for storybook title logo fill",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.logo.sprig",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "Hand-drawn cream-white leaf sprig for title logo (variant 1)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.logo.sprig.alt",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "Hand-drawn cream-white curling leaf sprig (variant 2)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.breath",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "Breath meter HUD ring with gap, tick marks and inner paper disc",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.eyelid",
+      "baseSize": [
+        512,
+        96
+      ],
+      "size": [
+        512,
+        96
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "Giant eyelid calm bar with soft lashes and golden glow-fill",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.dot",
+      "baseSize": [
+        64,
+        64
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "Empty fragment droplet outline (zone-tintable)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.dot.filled",
+      "baseSize": [
+        64,
+        64
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "Filled glowing fragment droplet (zone-tintable)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.dialogue",
+      "baseSize": [
+        768,
+        192
+      ],
+      "size": [
+        768,
+        192
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "Storybook dialogue paper box with speaker name tab and speech tail",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.portrait",
+      "baseSize": [
+        512,
+        128
+      ],
+      "size": [
+        512,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "4-portrait dialogue atlas (Grandma, Bramble, Pebble, Moth)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.keys",
+      "baseSize": [
+        768,
+        64
+      ],
+      "size": [
+        768,
+        64
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "12 hand-drawn cream/ink keycap icons (E,W,A,S,D,H,Space,Shift,Esc,M,Tab,P)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.compass",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "Soft edge-glow golden compass direction arrow",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.signicons",
+      "baseSize": [
+        384,
+        128
+      ],
+      "size": [
+        384,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "3-cell painted wooden-sign tutorial doodles (move, jump, climb)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.map",
+      "baseSize": [
+        1024,
+        512
+      ],
+      "size": [
+        1024,
+        512
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "tile",
+      "usage": "World map parchment with stains, soft edge burn, and region-wash helpers",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Tab map overlay & parchment canvas"
+    },
+    {
+      "id": "ui.map.icons",
+      "baseSize": [
+        448,
+        64
+      ],
+      "size": [
+        448,
+        64
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "sprite",
+      "usage": "7-icon map atlas (tower, tree, ribs, eyelid, lookout, ant dot, wishlight)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "Map landmark icons atlas"
+    },
+    {
+      "id": "ui.loading",
+      "baseSize": [
+        256,
+        256
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "Sunrise loading ring around tiny Pip silhouette",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "ui.toast",
+      "baseSize": [
+        256,
+        64
+      ],
+      "size": [
+        256,
+        64
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "ui",
+      "usage": "Small cream paper notification toast strip",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS UI skin (ui.js / index.html)"
+    },
+    {
+      "id": "story.menu",
+      "baseSize": [
+        1280,
+        720
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "story",
+      "usage": "Title screen fallback painting (golden meadow, 2 towers, Puffs, calm right space for logo)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS Story/Menu page (story.*)"
+    },
+    {
+      "id": "story.beat1",
+      "baseSize": [
+        1280,
+        720
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "story",
+      "usage": "Intro Beat 1 painting: sleeping Giant mossy hill-range at sunset, glowing tail colony",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS Story/Menu page (story.*)"
+    },
+    {
+      "id": "story.beat2",
+      "baseSize": [
+        1280,
+        720
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "story",
+      "usage": "Intro Beat 2 painting: glowing dream fragments drifting down hills under rose sky",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS Story/Menu page (story.*)"
+    },
+    {
+      "id": "story.beat3",
+      "baseSize": [
+        1280,
+        720
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "story",
+      "usage": "Intro Beat 3 painting: tiny Pip with lantern on ridge facing distant dawn head",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS Story/Menu page (story.*)"
+    },
+    {
+      "id": "story.lose",
+      "baseSize": [
+        1280,
+        720
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "story",
+      "usage": "Gentle cream wash lose card with swaying swirls and sleepy-eyelid motif",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS Story/Menu page (story.*)"
+    },
+    {
+      "id": "story.ending",
+      "baseSize": [
+        1280,
+        720
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "story",
+      "usage": "Ending storybook painting: dawn pink-gold sky, flower hills, Pip silhouette, sunburst",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS Story/Menu page (story.*)"
+    },
+    {
+      "id": "story.credits",
+      "baseSize": [
+        720,
+        2160
+      ],
+      "size": [
+        720,
+        2160
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "story",
+      "usage": "Tall scrolling credits backdrop (lavender dusk to crown dawn with stars & sprigs)",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS Story/Menu page (story.*)"
+    },
+    {
+      "id": "story.pause",
+      "baseSize": [
+        1280,
+        720
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "story",
+      "usage": "Warm soft paper veil backdrop for the pause menu",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS Story/Menu page (story.*)"
+    },
+    {
+      "id": "story.page",
+      "baseSize": [
+        1280,
+        720
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "story",
+      "usage": "Storybook lore page frame with paper, corner flourishes and soft page-curl shadow",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS Story/Menu page (story.*)"
+    },
+    {
+      "id": "story.divider",
+      "baseSize": [
+        512,
+        64
+      ],
+      "size": [
+        512,
+        64
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "story",
+      "usage": "Storybook horizontal ink-and-leaf divider flourish strip",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS Story/Menu page (story.*)"
+    },
+    {
+      "id": "story.dropcap",
+      "baseSize": [
+        128,
+        128
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "tiles": false,
+      "space": "srgb",
+      "kind": "story",
+      "usage": "Storybook illuminated dropcap leaf-sprig backdrop motif",
+      "worldRepeat": 1,
+      "flatShading": false,
+      "mergeTarget": "CSS Story/Menu page (story.*)"
+    }
+  ]
+}

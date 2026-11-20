@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dreamback — A Tiny Ant on a Sleeping Giant</title>
+  <meta name="description" content="A cozy realistic 3D open-world adventure: explore the living, breathing back of Old Mother Hush from Tail Marshes to The Crown." />
+  <meta property="og:title" content="Dreamback — A Cozy Breathing Open-World Adventure" />
+  <meta property="og:description" content="Gather four scattered Dream Fragments across the breathing back of an ancient sleeping Giant before dawn." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23FFC77A'/%3E%3Ccircle cx='24' cy='36' r='8' fill='%23C8643B'/%3E%3Ccircle cx='36' cy='33' r='7' fill='%23C8643B'/%3E%3Ccircle cx='44' cy='28' r='6' fill='%23C8643B'/%3E%3Ccircle cx='48' cy='20' r='5' fill='%23FFF4DC'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Fredoka:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', 'Fredoka', system-ui, sans-serif;
+      --gold: #F2C879;
+      --warm-ivory: #FFF4DC;
+      --paper: #FBF1DC;
+      --ink: #34291E;
+      --glass-dark: rgba(24, 21, 18, 0.54);
+      --glass-border: rgba(255, 244, 220, 0.22);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #1B1E1D; font-family: var(--font-sans); color: var(--warm-ivory); }
+    canvas#game { display: block; width: 100vw; height: 100vh; }
+
+    #ui { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
+    .hidden { display: none !important; }
+    .photo-hidden { opacity: 0 !important; pointer-events: none !important; }
+
+    /* Subtle floating golden atmospheric dust motes on Menu/Intro */
+    .dust-layer {
+      position: fixed; inset: 0; pointer-events: none; overflow: hidden;
+      background:
+        radial-gradient(2px 2px at 18% 28%, rgba(255, 232, 178, 0.65), transparent),
+        radial-gradient(2.5px 2.5px at 72% 22%, rgba(255, 220, 155, 0.55), transparent),
+        radial-gradient(2px 2px at 42% 66%, rgba(255, 244, 220, 0.5), transparent),
+        radial-gradient(3px 3px at 84% 58%, rgba(255, 200, 128, 0.45), transparent),
+        radial-gradient(2px 2px at 26% 78%, rgba(255, 244, 220, 0.45), transparent);
+      animation: dustDrift 18s ease-in-out infinite alternate;
+    }
+    @keyframes dustDrift {
+      from { transform: translate3d(-12px, 8px, 0) scale(1); opacity: 0.7; }
+      to { transform: translate3d(16px, -14px, 0) scale(1.04); opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) { .dust-layer { animation: none; } }
+
+    /* Editorial Glass-Obsidian Buttons */
+    .editorial-btn {
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 0.94rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 13px 28px;
+      border-radius: 6px;
+      border: 1px solid rgba(242, 200, 121, 0.65);
+      background: linear-gradient(135deg, rgba(242, 200, 121, 0.92), rgba(226, 158, 98, 0.92));
+      color: #261C12;
+      cursor: pointer;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+    }
+    .editorial-btn:hover { transform: translateY(-2px); filter: brightness(1.06); box-shadow: 0 14px 34px rgba(0, 0, 0, 0.36); }
+    .editorial-btn.ghost {
+      background: rgba(255, 244, 220, 0.08);
+      color: var(--warm-ivory);
+      border-color: rgba(255, 244, 220, 0.34);
+      backdrop-filter: blur(8px);
+    }
+    .editorial-btn.ghost:hover { background: rgba(255, 244, 220, 0.16); }
+
+    /* Loading Screen (Refined Atmospheric Warm Twilight) */
+    #loading {
+      position: fixed; inset: 0; z-index: 60; pointer-events: auto;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+      background: radial-gradient(circle at 50% 42%, #3A3229 0%, #1E1C1A 100%);
+    }
+    #loading h2 { font-family: var(--font-serif); font-size: 2.4rem; font-weight: 500; letter-spacing: 0.08em; color: var(--warm-ivory); }
+    #loading p { font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255, 244, 220, 0.58); }
+    .load-track { width: min(340px, 76vw); height: 3px; background: rgba(255, 244, 220, 0.16); overflow: hidden; border-radius: 99px; }
+    #loading-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #8FBF8F, #F2C879, #F6B8C8); transition: width 0.14s linear; }
+    #loading-pct { font-size: 0.8rem; color: rgba(255, 244, 220, 0.65); letter-spacing: 0.08em; }
+
+    /* CINEMATIC ANIMATED TITLE / MENU PAGE (Full-Bleed Live 3D Diorama) */
+    #title {
+      position: fixed; inset: 0; z-index: 30; pointer-events: auto;
+      display: flex; align-items: center; justify-content: flex-start;
+      padding: 6vh 6vw;
+      background: linear-gradient(90deg, rgba(18, 16, 14, 0.72) 0%, rgba(18, 16, 14, 0.32) 45%, rgba(18, 16, 14, 0.0) 100%);
+    }
+    .title-panel {
+      position: relative;
+      max-width: 430px;
+      display: flex; flex-direction: column; gap: 18px;
+      animation: fadeRise 0.9s ease-out both;
+    }
+    @keyframes fadeRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .title-eyebrow {
+      font-size: 0.74rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--gold); font-weight: 600;
+    }
+    .title-logo {
+      font-family: var(--font-serif);
+      font-size: clamp(3.6rem, 6vw, 5.1rem);
+      font-weight: 600;
+      line-height: 0.94;
+      letter-spacing: 0.03em;
+      color: var(--warm-ivory);
+      text-shadow: 0 8px 34px rgba(0, 0, 0, 0.55);
+    }
+    .title-rule { width: 68px; height: 1.5px; background: linear-gradient(90deg, var(--gold), transparent); }
+    .title-sub {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.24rem;
+      line-height: 1.5;
+      color: rgba(255, 244, 220, 0.88);
+    }
+    .diff-row {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(255, 244, 220, 0.78);
+    }
+    .diff-row select {
+      font-family: var(--font-sans);
+      background: rgba(24, 21, 18, 0.65);
+      color: var(--warm-ivory);
+      border: 1px solid var(--glass-border);
+      border-radius: 6px;
+      padding: 6px 12px;
+      backdrop-filter: blur(8px);
+    }
+    .title-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; max-width: 280px; }
+    .title-links { display: flex; gap: 16px; margin-top: 6px; }
+    .gallery-link { font-size: 0.76rem; letter-spacing: 0.06em; color: rgba(255, 244, 220, 0.68); text-decoration: none; }
+    .gallery-link:hover { color: var(--gold); }
+
+    /* LIVE 3D CINEMATIC STORYTELLING INTRO (Full-bleed 3D Camera + Cinema Letterbox) */
+    #intro {
+      position: fixed; inset: 0; z-index: 35; pointer-events: auto;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .cinema-bar {
+      height: 8.5vh;
+      background: linear-gradient(180deg, rgba(14, 13, 12, 0.92), rgba(14, 13, 12, 0.75));
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw;
+    }
+    .cinema-bar.bottom {
+      height: auto; min-height: 22vh;
+      background: linear-gradient(0deg, rgba(14, 13, 12, 0.94) 0%, rgba(14, 13, 12, 0.76) 72%, rgba(14, 13, 12, 0.0) 100%);
+      padding: 36px 7vw 28px;
+      flex-direction: column; align-items: center; gap: 12px; text-align: center;
+    }
+    #intro-chapter { font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+    #intro-title { font-family: var(--font-serif); font-size: clamp(2rem, 3.2vw, 2.7rem); font-weight: 600; color: var(--warm-ivory); letter-spacing: 0.03em; }
+    #intro-text { font-family: var(--font-serif); font-size: clamp(1.1rem, 1.55vw, 1.32rem); line-height: 1.62; max-width: 680px; color: rgba(255, 244, 220, 0.9); }
+    .intro-footer { display: flex; align-items: center; gap: 18px; margin-top: 6px; }
+    .intro-dots { display: flex; gap: 8px; }
+    .intro-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 244, 220, 0.26); transition: all 0.25s ease; }
+    .intro-dot.active { background: var(--gold); transform: scale(1.25); }
+    .intro-ctrl { background: none; border: 1px solid rgba(255, 244, 220, 0.3); color: var(--warm-ivory); padding: 6px 14px; border-radius: 99px; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
+    .intro-ctrl:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* REFINED IN-GAME HUD (Translucent Atmospheric Glass) */
+    #hud { position: fixed; inset: 0; pointer-events: none; transition: opacity 0.28s ease; }
+
+    /* Top Left: Clear Step-by-Step Wayfinder & Direction Card */
+    .objective-panel {
+      position: absolute; top: 18px; left: 20px; width: min(350px, 42vw);
+      background: rgba(18, 16, 14, 0.74);
+      border: 1px solid rgba(242, 200, 121, 0.36);
+      border-left: 3.5px solid var(--gold);
+      border-radius: 10px;
+      padding: 11px 15px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+    }
+    .obj-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    #obj-act { font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+    #obj-step { font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255, 244, 220, 0.68); font-weight: 600; }
+    #obj-text { font-size: 0.88rem; font-weight: 600; line-height: 1.35; color: var(--warm-ivory); margin-top: 4px; }
+    .obj-dir-row {
+      display: flex; align-items: center; gap: 9px; margin-top: 8px; padding-top: 7px;
+      border-top: 1px solid rgba(255, 244, 220, 0.14);
+      font-size: 0.76rem; color: #FFE3A8; font-weight: 600;
+    }
+    #obj-dir-arrow {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px; border-radius: 50%;
+      background: rgba(242, 200, 121, 0.18); border: 1px solid rgba(242, 200, 121, 0.5);
+      color: var(--gold); font-size: 0.82rem; flex: none;
+      transition: transform 0.12s linear;
+    }
+    #obj-dir-text { letter-spacing: 0.03em; }
+
+    /* Top Center: Eyelid Restlessness Bar + 4 Dream Gems */
+    .top-hud {
+      position: absolute; top: 18px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .eyelid-wrap {
+      background: var(--glass-dark);
+      border: 1px solid var(--glass-border);
+      border-radius: 999px;
+      padding: 6px 16px;
+      display: flex; align-items: center; gap: 10px;
+      backdrop-filter: blur(10px);
+    }
+    .eyelid-bar {
+      width: 170px; height: 10px; border-radius: 0 0 99px 99px;
+      background: rgba(255, 244, 220, 0.14);
+      border: 1px solid rgba(255, 244, 220, 0.35);
+      overflow: hidden;
+    }
+    #eyelid-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #8FBF8F, #F2C879, #E27BB1); transition: width 0.2s ease; }
+    #restless-val { font-size: 0.74rem; font-weight: 600; min-width: 48px; color: var(--warm-ivory); }
+
+    .frag-row { display: flex; gap: 10px; }
+    .frag-dot {
+      width: 15px; height: 15px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+      background: rgba(24, 21, 18, 0.55);
+      border: 1.5px solid rgba(255, 244, 220, 0.65);
+      transition: transform 0.28s ease, box-shadow 0.28s ease;
+    }
+    .frag-dot.collected { transform: rotate(-45deg) scale(1.22); box-shadow: 0 0 14px #FFC77A; border-color: #FFF4DC; }
+
+    #surge-pill {
+      background: rgba(226, 123, 177, 0.88); color: #1F181D;
+      border-radius: 99px; padding: 5px 16px; font-weight: 700; font-size: 0.82rem;
+      box-shadow: 0 0 22px rgba(246, 184, 200, 0.55);
+    }
+
+    /* Bottom Left: Breath Ring + Lantern */
+    .bottom-left { position: absolute; bottom: 22px; left: 22px; display: flex; align-items: center; gap: 12px; }
+    .breath-panel {
+      width: 76px; height: 76px; border-radius: 50%;
+      background: var(--glass-dark); border: 1px solid var(--glass-border);
+      display: flex; align-items: center; justify-content: center; position: relative;
+      backdrop-filter: blur(10px);
+    }
+    .breath-panel svg { transform: rotate(-90deg); width: 62px; height: 62px; }
+    #breath-label { position: absolute; font-size: 0.64rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--warm-ivory); }
+    #lantern-pill {
+      background: var(--glass-dark); border: 1px solid var(--glass-border);
+      border-radius: 99px; padding: 7px 15px; font-size: 0.78rem; font-weight: 600; backdrop-filter: blur(10px);
+    }
+
+    /* Top Right: Objective Compass & Shortcuts */
+    .top-right { position: absolute; top: 18px; right: 20px; display: flex; align-items: center; gap: 10px; }
+    .compass-badge {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: rgba(18, 16, 14, 0.72); border: 1px solid rgba(242, 200, 121, 0.42);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+      backdrop-filter: blur(10px);
+    }
+    #compass-arrow { font-size: 1.05rem; line-height: 1; color: var(--gold); transition: transform 0.1s linear; }
+    #compass-dist { font-size: 0.62rem; font-weight: 700; color: var(--warm-ivory); letter-spacing: 0.03em; }
+    .mini-keys {
+      background: var(--glass-dark); border: 1px solid var(--glass-border);
+      border-radius: 8px; padding: 6px 11px; font-size: 0.7rem; letter-spacing: 0.04em; backdrop-filter: blur(10px);
+      color: rgba(255, 244, 220, 0.8);
+    }
+
+    #prompt-box {
+      position: absolute; bottom: 118px; left: 50%; transform: translateX(-50%) translateY(8px);
+      background: rgba(24, 21, 18, 0.82); border: 1px solid var(--gold); color: var(--warm-ivory);
+      border-radius: 99px; padding: 9px 22px; font-weight: 600; font-size: 0.88rem; letter-spacing: 0.04em;
+      opacity: 0; transition: opacity 0.18s ease, transform 0.18s ease; backdrop-filter: blur(10px);
+    }
+    #prompt-box.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    #controls-hint {
+      position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
+      background: var(--glass-dark); border: 1px solid var(--glass-border);
+      border-radius: 99px; padding: 6px 18px; font-size: 0.78rem;
+      opacity: 0; transition: opacity 0.4s ease; backdrop-filter: blur(10px);
+    }
+    #controls-hint.show { opacity: 1; }
+
+    #rescue-hint {
+      position: absolute; bottom: 164px; left: 50%; transform: translateX(-50%);
+      background: rgba(242, 200, 121, 0.94); color: #261C12; border-radius: 99px;
+      padding: 6px 16px; font-weight: 700; font-size: 0.8rem;
+    }
+
+    #zone-banner {
+      position: absolute; top: 96px; left: 50%; transform: translateX(-50%);
+      font-family: var(--font-serif); font-size: 2.8rem; font-weight: 600; letter-spacing: 0.08em;
+      color: var(--warm-ivory); text-shadow: 0 6px 24px rgba(18, 16, 14, 0.75);
+      opacity: 0; transition: opacity 0.6s ease;
+    }
+    #zone-banner.show { opacity: 1; }
+
+    #toast {
+      position: absolute; top: 158px; left: 50%; transform: translateX(-50%); max-width: 560px; text-align: center;
+      background: rgba(24, 21, 18, 0.82); border: 1px solid rgba(242, 200, 121, 0.55); color: var(--warm-ivory);
+      border-radius: 10px; padding: 9px 20px; font-size: 0.86rem; line-height: 1.4;
+      opacity: 0; transition: opacity 0.3s ease; backdrop-filter: blur(10px);
+    }
+    #toast.show { opacity: 1; }
+
+    /* Dynamic Living-Giant Challenge Alert Banner */
+    #challenge-banner {
+      position: absolute; top: 96px; left: 50%; transform: translateX(-50%);
+      min-width: 340px; max-width: 560px; padding: 11px 20px; border-radius: 14px;
+      background: rgba(24, 18, 22, 0.88); border: 1.5px solid rgba(242, 200, 121, 0.72);
+      color: var(--warm-ivory); text-align: center; backdrop-filter: blur(12px);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+      display: flex; flex-direction: column; gap: 4px; align-items: center;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    #challenge-banner.safe { border-color: #8FBF8F; box-shadow: 0 12px 30px rgba(143, 191, 143, 0.28); }
+    #challenge-banner.danger { border-color: #FF7EB6; box-shadow: 0 12px 32px rgba(255, 126, 182, 0.34); }
+    .ch-head { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 0.94rem; letter-spacing: 0.06em; }
+    .ch-timer { background: rgba(242, 200, 121, 0.22); color: #FFE08A; padding: 2px 9px; border-radius: 99px; font-size: 0.78rem; }
+    .ch-hint { font-size: 0.8rem; opacity: 0.9; }
+    .ch-status { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.08em; padding: 2px 10px; border-radius: 99px; margin-top: 2px; }
+    #challenge-banner.safe .ch-status { background: rgba(143, 191, 143, 0.26); color: #B8F0B8; }
+    #challenge-banner.danger .ch-status { background: rgba(255, 100, 130, 0.28); color: #FFB3C6; }
+
+    /* Refined Dialogue Box */
+    #dialogue-box {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+      width: min(690px, 90vw); pointer-events: auto; z-index: 25;
+      display: flex; align-items: center; gap: 18px; padding: 18px 24px;
+      background-color: var(--paper); color: var(--ink);
+      border: 1.5px solid rgba(74, 59, 42, 0.45); border-radius: 14px;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.38);
+    }
+    #dialogue-portrait {
+      width: 72px; height: 72px; flex: none; border-radius: 50%;
+      background-size: 400% 100%; border: 2px solid #4A3B2A; background-color: #F4E9CD;
+    }
+    #dialogue-name { font-family: var(--font-serif); font-size: 1.45rem; font-weight: 700; color: #5E3F24; }
+    #dialogue-text { font-size: 0.96rem; line-height: 1.5; margin-top: 3px; min-height: 2.6em; }
+    .dlg-next { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.62; margin-top: 6px; }
+
+    #vignette {
+      position: fixed; inset: 0; pointer-events: none; z-index: 5; opacity: 0;
+      background: radial-gradient(circle at center, transparent 42%, rgba(44, 34, 24, 0.62) 100%);
+      transition: opacity 0.3s ease;
+    }
+    #fade {
+      position: fixed; inset: 0; pointer-events: none; z-index: 45;
+      background: #EFE2CA; opacity: 0; transition: opacity 0.4s ease;
+    }
+    #fade.active { opacity: 1; }
+
+    /* Frosted Translucent Overlays over Live 3D World (Pause, Lose, Ending, Credits, Map) */
+    .modal-screen {
+      position: fixed; inset: 0; z-index: 40; pointer-events: auto;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(18, 16, 14, 0.48);
+      backdrop-filter: blur(8px);
+    }
+    .glass-card {
+      position: relative; max-width: 500px; width: 90vw; text-align: center;
+      display: flex; flex-direction: column; gap: 15px; padding: 32px 36px;
+      background: rgba(26, 22, 19, 0.78);
+      border: 1px solid rgba(242, 200, 121, 0.38);
+      border-radius: 14px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.48);
+      color: var(--warm-ivory);
+    }
+    .glass-card h2 { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 600; letter-spacing: 0.04em; color: var(--warm-ivory); }
+    .glass-card p { font-family: var(--font-serif); font-style: italic; font-size: 1.2rem; line-height: 1.55; color: rgba(255, 244, 220, 0.88); }
+    .vol-row { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 0.84rem; color: rgba(255, 244, 220, 0.85); }
+
+    #credits-list { list-style: none; display: flex; flex-direction: column; gap: 9px; text-align: left; margin: 6px 0; }
+    #credits-list li { display: flex; justify-content: space-between; gap: 12px; font-size: 0.88rem; border-bottom: 1px solid rgba(255, 244, 220, 0.14); padding-bottom: 5px; }
+    #credits-list li strong { color: var(--gold); font-weight: 600; }
+
+    #map-canvas { width: min(760px, 88vw); height: auto; border-radius: 12px; border: 2px solid rgba(242, 200, 121, 0.55); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55); }
+
+    #debug-box {
+      position: fixed; bottom: 112px; left: 20px; z-index: 60;
+      background: rgba(18, 22, 24, 0.86); color: #FFF4DC; font-family: monospace;
+      font-size: 0.74rem; padding: 8px 11px; border-radius: 8px; white-space: pre;
+    }
+    #playtest-timer {
+      position: fixed; bottom: 20px; right: 20px; z-index: 60;
+      background: var(--glass-dark); border: 1px solid var(--gold); border-radius: 8px;
+      padding: 6px 12px; font-size: 0.76rem; font-weight: 600;
+    }
+    #mobile-warn { display: none; position: fixed; bottom: 8px; left: 8px; right: 8px; z-index: 70; background: #1E1A16; color: var(--warm-ivory); border: 1px solid var(--gold); border-radius: 10px; padding: 8px 12px; font-size: 0.8rem; text-align: center; }
+    @media (hover: none) and (pointer: coarse) { #mobile-warn { display: block; } }
+
+    #fatal-error {
+      position: fixed; inset: 0; z-index: 90; pointer-events: auto;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+      background: #1E1C1A; color: var(--warm-ivory); text-align: center; padding: 24px;
+    }
+  </style>
+</head>
+<body>
+  <noscript>
+    <div style="padding:32px;font-family:Georgia,serif;background:#1E1C1A;color:#FFF4DC;text-align:center;">
+      <h1>Dreamback</h1>
+      <p>Please enable JavaScript and serve via <code>python -m http.server 8000</code>.</p>
+    </div>
+  </noscript>
+
+  <canvas id="game"></canvas>
+
+  <div id="vignette"></div>
+  <div id="fade"></div>
+
+  <div id="ui">
+    <!-- Loading Screen -->
+    <div id="loading">
+      <h2>Dreamback</h2>
+      <p>Waking up the world · loading realistic CC0 textures &amp; models…</p>
+      <div class="load-track"><div id="loading-bar"></div></div>
+      <div id="loading-pct">0%</div>
+    </div>
+
+    <!-- Animated Full-Bleed 3D Title / Menu Page -->
+    <div id="title" class="hidden">
+      <div class="dust-layer"></div>
+      <div class="title-panel">
+        <div class="title-eyebrow">A Living Breathing World</div>
+        <h1 class="title-logo">Dreamback</h1>
+        <div class="title-rule"></div>
+        <p class="title-sub">A tiny scout. An ancient sleeping Giant. Four drifting dreams to return before dawn.</p>
+        <div class="diff-row">
+          <label for="diff-select">Pace</label>
+          <select id="diff-select">
+            <option value="cozy" selected>Cozy · Gentle Breath</option>
+            <option value="normal">Normal · Balanced</option>
+            <option value="bold">Bold · Restless Night</option>
+          </select>
+        </div>
+        <div class="title-actions">
+          <button id="continue-btn" class="editorial-btn" hidden>Continue Journey</button>
+          <button id="start-btn" class="editorial-btn">Begin Journey</button>
+        </div>
+        <div class="title-links">
+          <a class="gallery-link" href="./docs/texture-gallery/index.html" target="_blank">Texture Kit Gallery ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live 3D Cinematic Storytelling Intro (Beats 1, 2, 3) -->
+    <div id="intro" class="hidden">
+      <div class="dust-layer"></div>
+      <div class="cinema-bar">
+        <span id="intro-chapter">Chapter I</span>
+        <button id="intro-skip-btn" class="intro-ctrl">Skip Intro</button>
+      </div>
+      <div class="cinema-bar bottom">
+        <h2 id="intro-title">Old Mother Hush</h2>
+        <p id="intro-text"></p>
+        <div class="intro-footer">
+          <div class="intro-dots">
+            <span class="intro-dot active"></span>
+            <span class="intro-dot"></span>
+            <span class="intro-dot"></span>
+          </div>
+          <button id="intro-next-btn" class="intro-ctrl">Next Chapter →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- In-Game Minimal Atmospheric HUD -->
+    <div id="hud" class="hidden">
+      <div class="objective-panel">
+        <div class="obj-head">
+          <span id="obj-act">Tail Marshes</span>
+          <span id="obj-step">Step 1 / 7</span>
+        </div>
+        <div id="obj-text">Speak with Grandma Moss-Ant (Press E)</div>
+        <div class="obj-dir-row">
+          <span id="obj-dir-arrow">▲</span>
+          <span id="obj-dir-text">Straight Ahead · 18m · Follow the golden fireflies</span>
+        </div>
+      </div>
+
+      <div class="top-hud">
+        <div class="eyelid-wrap" title="Giant Restlessness">
+          <div class="eyelid-bar"><div id="eyelid-fill"></div></div>
+          <span id="restless-val">0%</span>
+        </div>
+        <div class="frag-row" aria-label="Dream Fragments">
+          <span class="frag-dot" title="Marsh Dream"></span>
+          <span class="frag-dot" title="Canopy Dream"></span>
+          <span class="frag-dot" title="Echo Dream"></span>
+          <span class="frag-dot" title="Dawn Dream"></span>
+        </div>
+        <div id="surge-pill" class="hidden">Dream Surge · 45s</div>
+      </div>
+
+      <div class="top-right">
+        <div class="mini-keys">G Guide · Tab Map · M Mute · P Photo · Esc Pause</div>
+        <div class="compass-badge" title="Direction & distance to current objective">
+          <span id="compass-arrow">▲</span>
+          <span id="compass-dist">18m</span>
+        </div>
+      </div>
+
+      <div class="bottom-left">
+        <div class="breath-panel" title="Giant Breathing Cycle">
+          <svg viewBox="0 0 60 60">
+            <circle cx="30" cy="30" r="25" fill="none" stroke="rgba(255,244,220,0.16)" stroke-width="4.5" />
+            <circle id="breath-arc" cx="30" cy="30" r="25" fill="none" stroke="#8FBF8F" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="157.08" stroke-dashoffset="157.08" />
+          </svg>
+          <span id="breath-label">inhale</span>
+        </div>
+        <div id="lantern-pill">Talk to Grandma for Lantern</div>
+      </div>
+
+      <div id="zone-banner"></div>
+      <div id="challenge-banner" class="hidden">
+        <div class="ch-head">
+          <span id="ch-title">🌋 GIANT TREMOR</span>
+          <span id="ch-timer" class="ch-timer">5s</span>
+        </div>
+        <div id="ch-hint" class="ch-hint">Seek shelter!</div>
+        <div id="ch-status" class="ch-status">INCOMING</div>
+      </div>
+      <div id="toast"></div>
+      <div id="prompt-box"></div>
+      <div id="rescue-hint" class="hidden">Stuck? Press R to return to the last Calm Spot</div>
+      <div id="controls-hint">WASD move · Space jump · Shift sprint · Mouse look · E interact · H hum</div>
+    </div>
+
+    <!-- Typewriter Dialogue Box -->
+    <div id="dialogue-box" class="hidden">
+      <div id="dialogue-portrait"></div>
+      <div>
+        <div id="dialogue-name">Grandma Moss-Ant</div>
+        <div id="dialogue-text"></div>
+        <div class="dlg-next">Press E to continue</div>
+      </div>
+    </div>
+
+    <!-- Frosted Pause Overlay over Live 3D -->
+    <div id="pause-screen" class="modal-screen hidden">
+      <div class="glass-card">
+        <h2>Resting a Moment</h2>
+        <div class="vol-row">
+          <label for="vol-slider">Volume</label>
+          <input id="vol-slider" type="range" min="0" max="100" value="72" />
+        </div>
+        <button id="resume-btn" class="editorial-btn">Resume Journey</button>
+        <button id="calm-respawn-btn" class="editorial-btn ghost">Return to Last Calm Spot</button>
+        <button id="mute-btn" class="editorial-btn ghost">Mute Audio (M)</button>
+        <button id="restart-btn" class="editorial-btn ghost">Restart Run</button>
+      </div>
+    </div>
+
+    <!-- Gentle Lose Overlay over Live 3D -->
+    <div id="lose-screen" class="modal-screen hidden">
+      <div class="glass-card">
+        <h2>Old Mother Hush Stirred</h2>
+        <p>The Giant woke… but dreams can be gathered again.</p>
+        <button id="try-again-btn" class="editorial-btn">Try Again (Keep Fragments)</button>
+        <button id="lose-restart-btn" class="editorial-btn ghost">Restart Run</button>
+      </div>
+    </div>
+
+    <!-- Ending Overlay over Live 3D Dawn Pullback -->
+    <div id="ending-screen" class="modal-screen hidden" style="background:rgba(18,16,14,0.28);backdrop-filter:blur(3px);">
+      <div class="glass-card">
+        <h2>Dawn Over Mother Hush</h2>
+        <p>The Giant sleeps on. The colony is safe. Pip's lantern glows a little brighter.</p>
+        <button id="to-credits-btn" class="editorial-btn hidden">View Credits</button>
+      </div>
+    </div>
+
+    <!-- Credits Overlay over Live 3D Dawn Sky -->
+    <div id="credits-screen" class="modal-screen hidden">
+      <div class="glass-card">
+        <h2>Dreamback</h2>
+        <ul id="credits-list"></ul>
+        <button id="play-again-btn" class="editorial-btn">Play Again</button>
+      </div>
+    </div>
+
+    <!-- Tab World Map Overlay -->
+    <div id="map-overlay" class="modal-screen hidden">
+      <div class="glass-card" style="max-width:820px;">
+        <h2 style="font-size:1.8rem;">Old Mother Hush — Map (Tab to close)</h2>
+        <canvas id="map-canvas" width="760" height="280"></canvas>
+      </div>
+    </div>
+
+    <div id="debug-box" class="hidden"></div>
+    <div id="playtest-timer" class="hidden"></div>
+    <div id="mobile-warn">Dreamback is best played on desktop with keyboard (WASD) &amp; mouse.</div>
+    <div id="fatal-error" class="hidden"></div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dreamback — Texture Kit Gallery (T0–T9)</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>Dreamback <span>Texture Kit</span></h1>
+      <p>Complete T0–T9 Storybook Procedural Kit · Canvas 2D + Three.js 0.160.0 · API on <code>window.DreambackTex</code></p>
+    </div>
+
+    <div class="controls">
+      <label class="ctrl-group">
+        <span>Quality</span>
+        <select id="qualitySelect">
+          <option value="high" selected>High (512 / 256 / 1280×720)</option>
+          <option value="medium">Medium (256 / 128 / 960×540)</option>
+          <option value="low">Low (128 / 64 / 640×360)</option>
+        </select>
+      </label>
+
+      <label class="ctrl-group">
+        <span>Seed</span>
+        <input id="seedInput" type="number" value="1337" min="1" max="999999" />
+      </label>
+
+      <button id="regenBtn" class="btn-primary">Regenerate</button>
+      <button id="exportAllBtn" class="btn-secondary">Export all PNGs</button>
+    </div>
+  </header>
+
+  <section class="progress-wrap" id="progressWrap">
+    <div class="progress-meta">
+      <span id="progressLabel">Initializing Dreamback Texture Kit…</span>
+      <span id="progressPct">0%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </section>
+
+  <!-- T9 QA Summary Banner -->
+  <section class="metrics-bar" id="metricsBar">
+    <div class="metric-pill"><span>Compute Time</span><strong id="mTime">—</strong></div>
+    <div class="metric-pill"><span>Est. GPU Memory</span><strong id="mGpu">—</strong></div>
+    <div class="metric-pill"><span>Seamless Tiles</span><strong id="mSeam">—</strong></div>
+    <div class="metric-pill"><span>Luminance / Fringe</span><strong id="mLuma">—</strong></div>
+    <div class="metric-pill"><span>Catalog Count</span><strong id="mCount">—</strong></div>
+  </section>
+
+  <main class="workspace">
+    <!-- Left Inspector: Golden-Hour 3D Sphere + Plane & 3x3 Tile Preview -->
+    <aside class="inspector">
+      <div class="inspector-header">
+        <div>
+          <h2 id="inspId">land.marsh</h2>
+          <p id="inspUsage">Select any texture swatch to inspect</p>
+        </div>
+        <button id="downloadPngBtn" class="btn-small">Download PNG</button>
+      </div>
+
+      <div class="qa-badges" id="inspBadges"></div>
+
+      <!-- Design Bible Golden-Hour 3D Preview (Sphere + Plane simultaneously) -->
+      <div class="stage-wrap">
+        <canvas id="threeCanvas"></canvas>
+        <div class="stage-overlay" id="stageOverlay"></div>
+      </div>
+
+      <div class="slider-panel">
+        <div class="slider-row">
+          <label for="todSlider">Time of Day <strong id="todLabel">Golden Hour (15°)</strong></label>
+          <input id="todSlider" type="range" min="0" max="4" step="0.05" value="0" />
+        </div>
+        <div class="slider-row">
+          <label for="elevSlider">Sun Elevation <strong id="elevLabel">15°</strong></label>
+          <input id="elevSlider" type="range" min="6" max="32" step="1" value="15" />
+        </div>
+        <div class="btn-row" id="bgButtons">
+          <button data-bg="golden" class="active">Golden Sky</button>
+          <button data-bg="light">Light Paper</button>
+          <button data-bg="dark">Dark Cavern</button>
+          <button data-bg="checker">Checker</button>
+        </div>
+      </div>
+
+      <!-- 3x3 Tile Preview (T0 requirement) -->
+      <div class="tile3-panel">
+        <div class="tile3-head">
+          <h3 id="tile3Heading">3×3 Tile Preview</h3>
+          <label class="toggle-line">
+            <input type="checkbox" id="seamGuideToggle" checked />
+            <span>Seam grid</span>
+          </label>
+        </div>
+        <canvas id="tile3Canvas" width="330" height="330"></canvas>
+        <div class="seam-stats" id="seamStats">—</div>
+      </div>
+    </aside>
+
+    <!-- Right Column: View Modes + Grouped Prefix Catalog -->
+    <section class="gallery-col">
+      <div class="view-bar" id="viewTabs">
+        <button data-view="catalog" class="active">Catalog Grid</button>
+        <button data-view="sky">Sky 5-Column Strip (T6)</button>
+        <button data-view="ui">UI Cream Sheet (T7)</button>
+        <button data-view="story">Story Picture Book (T8)</button>
+      </div>
+
+      <nav class="filter-tabs" id="prefixTabs"></nav>
+
+      <div id="catalogView" class="catalog-sections"></div>
+      <div id="skyView" class="special-view" hidden></div>
+      <div id="uiView" class="special-view" hidden></div>
+      <div id="storyView" class="special-view" hidden></div>
+    </section>
+  </main>
+
+  <script type="module" src="./gallery.js"></script>
+</body>
+</html>
