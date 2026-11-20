@@ -1231,16 +1231,52 @@ function buildSharedFoliageAndPlatforms(scene) {
   }));
   scene.add(fireflyPoints);
 
-  // Fluttering golden butterflies
-  const bflyMat = getSprite('fx.butterfly', '#FFC46B', false);
-  for (let i = 0; i < 14; i++) {
-    const sp = new THREE.Sprite(bflyMat);
-    const bx = -260 + i * 22;
-    const bz = (i % 2 === 0 ? -1 : 1) * (6 + (i % 3) * 7);
-    sp.position.set(bx, getBaseHeightAt(bx, bz) + 3.2, bz);
-    sp.scale.set(1.4, 0.7, 1);
-    scene.add(sp);
-    butterflySprites.push({ sprite: sp, baseX: bx, baseZ: bz, phase: i * 1.1 });
+  // 26 Individual 3D Flapping Butterflies scattered across the expanded open world (1 atlas cell per butterfly!)
+  butterflySprites = [];
+  const baseBflyTex = getTex('fx.butterfly');
+  const wingGeo = new THREE.PlaneGeometry(0.65, 0.72);
+  wingGeo.translate(0.325, 0, 0); // Hinge on inner body edge so wings flap naturally!
+  const bflyMats = [];
+  for (let c = 0; c < 4; c++) {
+    let mat;
+    if (baseBflyTex) {
+      const cellTex = baseBflyTex.clone();
+      cellTex.repeat.set(0.25, 1);
+      cellTex.offset.set(c * 0.25, 0);
+      cellTex.needsUpdate = true;
+      mat = new THREE.MeshBasicMaterial({ map: cellTex, transparent: true, alphaTest: 0.15, side: THREE.DoubleSide });
+    } else {
+      const cols = ['#FFC46B', '#D9A441', '#4FD1C5', '#F6B8C8'];
+      mat = new THREE.MeshBasicMaterial({ color: cols[c], side: THREE.DoubleSide });
+    }
+    bflyMats.push(mat);
+  }
+  for (let i = 0; i < 26; i++) {
+    const grp = new THREE.Group();
+    const m = bflyMats[i % 4];
+    const wingR = new THREE.Mesh(wingGeo, m);
+    const wingL = new THREE.Mesh(wingGeo, m);
+    wingL.scale.x = -1; // Mirror left wing
+    grp.add(wingR, wingL);
+
+    const bx = -320 + hash2(i, 811) * 640;
+    const bz = -115 + hash2(i, 823) * 230;
+    const sc = 0.75 + hash2(i, 829) * 0.55;
+    grp.scale.setScalar(sc);
+    grp.position.set(bx, getBaseHeightAt(bx, bz) + 2.8, bz);
+    scene.add(grp);
+    butterflySprites.push({
+      group: grp,
+      wingL,
+      wingR,
+      baseX: bx,
+      baseZ: bz,
+      radX: 7 + hash2(i, 839) * 14,
+      radZ: 6 + hash2(i, 853) * 14,
+      spd: 0.45 + hash2(i, 857) * 0.55,
+      flapSpd: 11 + hash2(i, 863) * 6,
+      phase: hash2(i, 877) * Math.PI * 2,
+    });
   }
 
   // Ending 3,600-Flower Wave InstancedMesh
@@ -1505,9 +1541,17 @@ export function updateWorld(dt, state, scene, sunLight, hemiLight, camera) {
     pf.group.rotation.y = Math.sin(time * 0.5 + pf.phase) * 0.45;
   }
   for (const bf of butterflySprites) {
-    const bx = bf.baseX + Math.sin(time * 0.9 + bf.phase) * 5.0;
-    const bz = bf.baseZ + Math.cos(time * 0.7 + bf.phase) * 4.0;
-    bf.sprite.position.set(bx, getHeightAt(bx, bz, b) + 2.8 + Math.sin(time * 3.2 + bf.phase) * 0.8, bz);
+    const tPh = time * bf.spd + bf.phase;
+    const bx = bf.baseX + Math.sin(tPh) * bf.radX;
+    const bz = bf.baseZ + Math.sin(tPh * 1.7 + 0.8) * bf.radZ;
+    const dx = bx - bf.group.position.x;
+    const dz = bz - bf.group.position.z;
+    const by = getHeightAt(bx, bz, b) + 2.4 + Math.sin(time * 2.8 + bf.phase) * 0.95;
+    bf.group.position.set(bx, by, bz);
+    if (Math.hypot(dx, dz) > 0.001) bf.group.rotation.y = Math.atan2(dx, dz);
+    const flap = Math.sin(time * bf.flapSpd + bf.phase) * 0.95;
+    bf.wingR.rotation.z = flap;
+    bf.wingL.rotation.z = -flap;
   }
   if (fireflyPoints) {
     const pos = fireflyPoints.geometry.attributes.position;
